@@ -20,7 +20,7 @@ namespace Infra.Dependeces
         {
             //var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
 
-            services.AddDbContext<AppDbContext>(options => options.UseNpgsql("server=localhost;Id=root;password=123456;database=upa"));
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql("Server=projtcc.postgres.database.azure.com;Database=upa;Port=5432;User Id=vinicius;Password=coxinha123@;"));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
