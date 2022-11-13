@@ -12,4 +12,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
     <PackageReference Include="Npgsql.Json.NET" Version="6.0.7" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Medico\" />
+    <Folder Include="Views\Unidade\" />
+  </ItemGroup>
 </Project>
