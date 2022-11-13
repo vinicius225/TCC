@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MVC.Controllers
 {
-    public class UnidadesController : Controller
+    public class UnidadeController : Controller
     {
         // GET: UnidadesController
         public ActionResult Index()

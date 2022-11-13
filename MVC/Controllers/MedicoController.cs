@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MVC.Controllers
 {
-    public class MedicosController : Controller
+    public class MedicoController : Controller
     {
         // GET: MedicosController
         public ActionResult Index()
