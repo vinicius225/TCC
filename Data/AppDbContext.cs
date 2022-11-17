@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -21,9 +21,13 @@ namespace Data
         public DbSet<Medico> Medico { get; set; }
         public DbSet<Especialidade> Especialidade { get; set; }
         public DbSet<UnidadeSaude> UnidadeSaude { get; set; }
-
         public DbSet<BuscaEspecialidade> BuscaEspecialidade { get; set; }
+        public DbSet<Perfil> Perfil { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<UnidadeSaudeMedico> UnidadeSaudeMedico { get; set; }
+        public DbSet<Especialidade_Medico> Especialidade_Medico { get; set; }
         public DbSet<Plantao> Plantaos { get; set; }
+
 
         public override int SaveChanges()
         {

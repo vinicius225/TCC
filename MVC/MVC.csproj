@@ -17,4 +17,8 @@
     <Folder Include="Views\Medico\" />
     <Folder Include="Views\Unidade\" />
   </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Infra\Infra.csproj" />
+		<ProjectReference Include="..\Data\Data.csproj" />
+	</ItemGroup>
 </Project>
