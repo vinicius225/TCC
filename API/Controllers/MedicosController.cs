@@ -1,5 +1,4 @@
-﻿using API.DTOs;
-using API.DTOs.AutoMapping;
+﻿
 using AutoMapper;
 using Data;
 using Data.Entities;
@@ -26,14 +25,14 @@ namespace API.Controllers
 
         // GET: api/<MedicosController>
         [HttpGet]
-        public async Task<ActionResult<List<MedicoDTO>>> Get()
+        public async Task<ActionResult<List<Medico>>> Get()
         {
 
             var medicosBD =  _medicoRepository.GetAll();
 
             medicosBD = medicosBD.ToList();
 
-            var medicosDTO = _mapping.Map<List<MedicoDTO>>(medicosBD);
+            var medicosDTO = _mapping.Map<List<Medico>>(medicosBD);
 
 
             return Ok(medicosDTO);
@@ -42,12 +41,12 @@ namespace API.Controllers
 
         // GET api/<MedicosController>/5
         [HttpGet("{id}")]
-        public ActionResult<MedicoDTO> Get(int id)
+        public ActionResult<Medico> Get(int id)
         {
             var medicoDb = _medicoRepository.Get(id);
             if (medicoDb != null)
             {
-                return Ok(_mapping.Map<MedicoDTO>(medicoDb));
+                return Ok(_mapping.Map<Medico>(medicoDb));
             }
             else
             {
@@ -57,14 +56,14 @@ namespace API.Controllers
 
         // POST api/<MedicosController>
         [HttpPost]
-        public ActionResult<MedicoDTO> Post([FromBody] MedicoDTO medicoDTO)
+        public ActionResult<Medico> Post([FromBody] Medico Medico)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _medicoRepository.Add(_mapping.Map<Medico>(medicoDTO));
-                    return Ok(medicoDTO);
+                    _medicoRepository.Add(_mapping.Map<Medico>(Medico));
+                    return Ok(Medico);
                 }
 
             }
@@ -77,7 +76,7 @@ namespace API.Controllers
 
         // PUT api/<MedicosController>/5
         [HttpPut("{id}")]
-        public ActionResult<MedicoDTO> Put(int id, [FromBody] MedicoDTO medico)
+        public ActionResult<Medico> Put(int id, [FromBody] Medico medico)
         {
             var medicoBd = _medicoRepository.Get(id);
             if (medico != null)

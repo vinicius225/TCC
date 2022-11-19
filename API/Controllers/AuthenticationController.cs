@@ -1,4 +1,5 @@
-﻿using API.DTOs;
+﻿
+using Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult> Post([FromBody] UsuarioDto user)
+        public async Task<ActionResult> Post([FromBody] Usuario user)
         {
             if (!ModelState.IsValid)
             {
@@ -39,13 +40,13 @@ namespace API.Controllers
             }
             var userIdentity = new IdentityUser
             {
-                UserName = user.Email,
-                Email = user.Email,
+                UserName = user.email,
+                Email = user.email,
                 EmailConfirmed = true,
                 
             };
 
-            var result = await _userManager.CreateAsync(userIdentity, user.Password);
+            var result = await _userManager.CreateAsync(userIdentity, user.senha);
 
             if (!result.Succeeded)
             {
@@ -53,20 +54,20 @@ namespace API.Controllers
             }
             await _signInManager.SignInAsync(userIdentity, false);
 
-            return Ok(GeraToken(user));
+            return Ok(/*GeraToken(user)*/);
         }
         [HttpPost("login")]
-        public async  Task<ActionResult> Login(UsuarioDto usuario)
+        public async  Task<ActionResult> Login(Usuario usuario)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.Values.Select(a=> a.Errors));
             }
-            var result = await  _signInManager.PasswordSignInAsync(usuario.Email, usuario.Password, false, false);
+            var result = await  _signInManager.PasswordSignInAsync(usuario.email, usuario.email, false, false);
 
             if (result.Succeeded)
             {
-                return Ok(GeraToken(usuario));
+                return Ok(/*GeraToken(usuario)*/);
             }else
             {
                 return BadRequest("Login Invalido!");
@@ -76,11 +77,11 @@ namespace API.Controllers
         #endregion
 
         #region Methods
-        private UsuarioToken GeraToken(UsuarioDto usuarioDto)
+        private void GeraToken(Usuario usuarioDto)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.UniqueName, usuarioDto.Email),
+                new Claim(JwtRegisteredClaimNames.UniqueName, usuarioDto.email),
                 new Claim("meuPet","pipoca"),
                 new Claim (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
@@ -106,13 +107,13 @@ namespace API.Controllers
 
                 );
 
-            return new UsuarioToken()
-            {
-                Authenticated = true,
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = expiration,
-                Message = "Token JWT ok"
-            };
+            //return new UsuarioToken()
+            //{
+            //    Authenticated = true,
+            //    Token = new JwtSecurityTokenHandler().WriteToken(token),
+            //    Expiration = expiration,
+            //    Message = "Token JWT ok"
+            //};
 
         }
         #endregion

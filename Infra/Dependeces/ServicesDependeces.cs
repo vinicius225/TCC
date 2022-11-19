@@ -31,6 +31,7 @@ namespace Infra.Dependeces
         {
             services.AddScoped<IMedicoRepository, MedicoRepository>();
             services.AddScoped<IEspecialidadeRepository, EspecialidadeRepository>();
+            services.AddScoped<IUnidadeSaudeRepository, UnidadeSaudeRepository>();
 
             return services;
 

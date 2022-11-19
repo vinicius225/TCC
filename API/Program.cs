@@ -1,4 +1,4 @@
-using API.DTOs.AutoMapping;
+
 using AutoMapper;
 using Infra.Dependeces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -34,15 +34,6 @@ builder.Services.AddAuthentication
         }
     );
 
-
-
-var mappingConfig = new MapperConfiguration(mc =>
-{
-    mc.AddProfile(new MappingProfile());
-});
-
-IMapper mapper = mappingConfig.CreateMapper();
-builder.Services.AddSingleton(mapper);
 
 
 
