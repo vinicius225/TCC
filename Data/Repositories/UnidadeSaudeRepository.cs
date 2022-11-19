@@ -4,9 +4,9 @@ using Data.Repositories.Interfaces;
 
 namespace Data.Repositories
 {
-    public class MedicoRepository : RepositoryBase<Medico>, IMedicoRepository
+    public class UnidadeSaudeRepository : RepositoryBase<UnidadeSaude>, IUnidadeSaudeRepository
     {
-        public MedicoRepository(AppDbContext appDbContext) : base(appDbContext)
+        public UnidadeSaudeRepository(AppDbContext appDbContext) : base(appDbContext)
         {
 
         }
