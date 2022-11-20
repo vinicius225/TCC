@@ -18,12 +18,10 @@ namespace API.Controllers
     public class EspecialidadeController : ControllerBase
     {
         private readonly IEspecialidadeRepository _especialidadeRepository;
-        private readonly IMapper _mapper;
 
         public EspecialidadeController(IEspecialidadeRepository especialidadeRepository, IMapper autoMapper)
         {
             _especialidadeRepository = especialidadeRepository;
-            _mapper = autoMapper;
         }
 
 

@@ -15,8 +15,6 @@ namespace API.Controllers
     public class MedicosController : ControllerBase
     {
         private readonly IMedicoRepository _medicoRepository;
-        private readonly IMapper _mapping;
-        private AppDbContext appDbContext;
         public MedicosController(IMedicoRepository medicoRepository, IMapper mapping)
         {
             _medicoRepository = medicoRepository;
