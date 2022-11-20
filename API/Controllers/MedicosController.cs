@@ -18,7 +18,6 @@ namespace API.Controllers
         public MedicosController(IMedicoRepository medicoRepository, IMapper mapping)
         {
             _medicoRepository = medicoRepository;
-            _mapping = mapping;
         }
 
         // GET: api/<MedicosController>
@@ -28,12 +27,7 @@ namespace API.Controllers
 
             var medicosBD =  _medicoRepository.GetAll();
 
-            medicosBD = medicosBD.ToList();
-
-            var medicosDTO = _mapping.Map<List<Medico>>(medicosBD);
-
-
-            return Ok(medicosDTO);
+            return Ok(medicosBD);
 
         }
 
@@ -44,7 +38,7 @@ namespace API.Controllers
             var medicoDb = _medicoRepository.Get(id);
             if (medicoDb != null)
             {
-                return Ok(_mapping.Map<Medico>(medicoDb));
+                return Ok(medicoDb);
             }
             else
             {
@@ -60,7 +54,7 @@ namespace API.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _medicoRepository.Add(_mapping.Map<Medico>(Medico));
+                    _medicoRepository.Add(Medico);
                     return Ok(Medico);
                 }
 
