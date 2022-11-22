@@ -1,10 +1,12 @@
 ﻿
 using AutoMapper;
 using Data;
+using Data.DTOs;
 using Data.Entities;
 using Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,30 +17,41 @@ namespace API.Controllers
     public class MedicosController : ControllerBase
     {
         private readonly IMedicoRepository _medicoRepository;
-        public MedicosController(IMedicoRepository medicoRepository, IMapper mapping)
+        public MedicosController(IMedicoRepository medicoRepository)
         {
             _medicoRepository = medicoRepository;
         }
 
         // GET: api/<MedicosController>
         [HttpGet]
-        public async Task<ActionResult<List<Medico>>> Get()
+        public async Task<ActionResult<List<MedicoDTO>>> Get()
         {
 
             var medicosBD =  _medicoRepository.GetAll();
 
-            return Ok(medicosBD);
+            List<MedicoDTO> result = new List<MedicoDTO>();
+
+            foreach (var medico in medicosBD)
+            {
+                var temp_medico = new  MedicoDTO(); 
+                temp_medico.Get(medico);
+                result.Add(temp_medico);
+            }
+
+            return Ok(result);
 
         }
 
         // GET api/<MedicosController>/5
         [HttpGet("{id}")]
-        public ActionResult<Medico> Get(int id)
+        public ActionResult<MedicoDTO> Get(int id)
         {
             var medicoDb = _medicoRepository.Get(id);
             if (medicoDb != null)
             {
-                return Ok(medicoDb);
+                var medicoDto = new MedicoDTO();
+                medicoDto.Get(medicoDb);
+                return Ok(medicoDto);
             }
             else
             {
@@ -48,14 +61,16 @@ namespace API.Controllers
 
         // POST api/<MedicosController>
         [HttpPost]
-        public ActionResult<Medico> Post([FromBody] Medico Medico)
+        public ActionResult<MedicoDTO> Post([FromBody] MedicoDTO medico)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _medicoRepository.Add(Medico);
-                    return Ok(Medico);
+                    var medicoBD = new Medico();
+                    medico.Set(medicoBD);
+                    _medicoRepository.Add(medicoBD);
+                    return Ok(medico);
                 }
 
             }
@@ -68,17 +83,15 @@ namespace API.Controllers
 
         // PUT api/<MedicosController>/5
         [HttpPut("{id}")]
-        public ActionResult<Medico> Put(int id, [FromBody] Medico medico)
+        public ActionResult<MedicoDTO> Put(int id, [FromBody] MedicoDTO medico)
         {
             var medicoBd = _medicoRepository.Get(id);
             if (medico != null)
             {
-                medicoBd.nome = medico.nome;
-                medicoBd.estado_crm = medico.estado_crm;
-
-                _medicoRepository.Update(medicoBd);
-
+                medico.Set(medicoBd);
+                _medicoRepository.Add(medicoBd);
                 return Ok(medico);
+
             }
             else
             {

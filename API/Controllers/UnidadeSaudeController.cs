@@ -1,4 +1,6 @@
-﻿using Data.Entities;
+﻿using Data.DTOs;
+using Data.Entities;
+using Data.Repositories;
 using Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,23 +12,34 @@ namespace API.Controllers
     [ApiController]
     public class UnidadeSaudeController : ControllerBase
     {
-        private readonly IUnidadeRepository _unidadeRepository;
+        private readonly IUnidadeSaudeRepository _unidadeRepository;
 
-        public UnidadeSaudeController(IUnidadeRepository unidadeRepository)
+        public UnidadeSaudeController(IUnidadeSaudeRepository unidadeRepository)
         {
             _unidadeRepository = unidadeRepository;
         }
 
         // GET: api/<UnidadeSaudeController>
         [HttpGet]
-        public ActionResult<IEnumerable<UnidadeSaude>> Get()
+        public ActionResult<List<UnidadeDTO>> Get()
         {
-            return Ok(_unidadeRepository.GetAll());
+            var UnidadesBD = _unidadeRepository.GetAll();
+
+            List<UnidadeDTO> result = new List<UnidadeDTO>();
+
+            foreach (var unidade in UnidadesBD)
+            {
+                var temp_unidade = new UnidadeDTO();
+                temp_unidade.Get(unidade);
+                result.Add(temp_unidade);
+            }
+
+            return Ok(result);
         }
 
         // GET api/<UnidadeSaudeController>/5
         [HttpGet("{id}")]
-        public ActionResult<UnidadeSaude> Get(int id)
+        public ActionResult<UnidadeDTO> Get(int id)
         {
             var unidade = _unidadeRepository.Get(id);
             if(unidade == null)
@@ -35,37 +48,44 @@ namespace API.Controllers
             }
             else
             {
-                return Ok(unidade); 
+                var unidadeDTO = new UnidadeDTO();
+                unidadeDTO.Get(unidade);
+                return Ok(unidadeDTO);
             }
         }
 
         // POST api/<UnidadeSaudeController>
-        [HttpPost]
-        public ActionResult<UnidadeSaude> Post([FromBody] UnidadeSaude unidadeDTO)
+        [HttpPost("{id}")]
+        public ActionResult<UnidadeSaude> Post(int id,[FromBody] UnidadeDTO unidadeDTO)
         {
-            if(!ModelState.IsValid) {
+            if(!ModelState.IsValid ) {
                 return BadRequest(ModelState);
             }
             else
             {
-                _unidadeRepository.Add(unidadeDTO);
+                var unidadeBd = new UnidadeSaude();
+                unidadeDTO.Set(unidadeBd);
+                _unidadeRepository.Update(unidadeBd);
+                return Ok(unidadeDTO);
             }
-            return unidadeDTO;
         }
 
         // PUT api/<UnidadeSaudeController>/5
         [HttpPut("{id}")]
-        public ActionResult<UnidadeSaude> Put(int id, [FromBody] UnidadeSaude unidadeDTO)
+        public ActionResult<UnidadeSaude> Put(int id, [FromBody] UnidadeDTO unidadeDTO)
         {
-            if (!ModelState.IsValid)
+
+            var unidadeBd = _unidadeRepository.Get(id);
+            if (!ModelState.IsValid || unidadeBd == null)
             {
                 return BadRequest(ModelState);
             }
             else
             {
-                _unidadeRepository.Add(unidadeDTO);
+                unidadeDTO.Set(unidadeBd);
+                return unidadeBd;
+
             }
-            return unidadeDTO;
         }
 
         // DELETE api/<UnidadeSaudeController>/5

@@ -1,6 +1,8 @@
 ﻿
 using AutoMapper;
+using Data.DTOs;
 using Data.Entities;
+using Data.Repositories;
 using Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -27,49 +29,66 @@ namespace API.Controllers
 
         // GET: api/<EspecialidadeController>
         [HttpGet]
-        public IEnumerable<Especialidade> Get()
+        public ActionResult<List<EspecialidadeDTO>> Get()
         {
-            var especialidade = _especialidadeRepository.GetAll().ToList();
+            var especialidadesBD = _especialidadeRepository.GetAll();
 
-            return especialidade;
+            List<EspecialidadeDTO> result = new List<EspecialidadeDTO>();
+
+            foreach (var especialidade in especialidadesBD)
+            {
+                var temp_especialidade = new EspecialidadeDTO();
+                temp_especialidade.Get(especialidade);
+                result.Add(temp_especialidade);
+            }
+
+            return Ok(result);
+
         }
 
         // GET api/<EspecialidadeController>/5
         [HttpGet("{id}")]
-        public ActionResult<Especialidade> Get(int id)
+        public ActionResult<EspecialidadeDTO> Get(int id)
         {
             var especialidade = _especialidadeRepository.Get(id);
             if(especialidade == null) {
                 return BadRequest();
             }else
             {
-                return Ok(especialidade);   
+                var especialidadeDTO = new EspecialidadeDTO();
+                especialidadeDTO.Get(especialidade);
+
+                return especialidadeDTO;
             }
         }
 
         // POST api/<EspecialidadeController>
         [HttpPost]
-        public ActionResult<Especialidade> Post([FromBody] Especialidade especialidadeDTO)
+        public ActionResult<EspecialidadeDTO> Post([FromBody] EspecialidadeDTO especialidadeDTO)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _especialidadeRepository.Add(especialidadeDTO);
+
+            var result = new Especialidade();
+            especialidadeDTO.Set(result);
+            _especialidadeRepository.Add(result);
             return Ok(especialidadeDTO);
         }
 
         // PUT api/<EspecialidadeController>/5
         [HttpPut("{id}")]
-        public ActionResult<Especialidade> Put(int id, [FromBody] Especialidade especialidadeDTO)
+        public ActionResult<EspecialidadeDTO> Put(int id, [FromBody] EspecialidadeDTO especialidadeDTO)
         {
 
             var especialidade = _especialidadeRepository.Get(id);
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || especialidade == null)
             {
                 return BadRequest(ModelState);
             }
-            _especialidadeRepository.Update(especialidadeDTO);
+            especialidadeDTO.Set(especialidade);
+            _especialidadeRepository.Update(especialidade);
             return Ok(especialidadeDTO);
         }
 
