@@ -76,6 +76,13 @@ namespace API.Controllers
             return Ok(especialidadeDTO);
         }
 
+        [HttpGet("/busca-especializada")]
+        public ActionResult<MedicoDTO> BuscaEspecializada(PesquisaEspecializadaDTO busca)
+        {
+            return Ok(busca);
+        } 
+
+
         // PUT api/<EspecialidadeController>/5
         [HttpPut("{id}")]
         public ActionResult<EspecialidadeDTO> Put(int id, [FromBody] EspecialidadeDTO especialidadeDTO)

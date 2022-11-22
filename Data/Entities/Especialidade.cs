@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Permissions;
 
 namespace Data.Entities
 {
@@ -8,5 +9,7 @@ namespace Data.Entities
     {
         public string nome { get; set; }
         public string descricao { get; set; }
+        public virtual ICollection<Medico> Medico { get; set; }
+
     }
 }
