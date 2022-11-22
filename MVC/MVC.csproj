@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Medico\" />
     <Folder Include="Views\Especilaidade\" />
+    <Folder Include="Views\Especialidade\" />
     <Folder Include="Views\Unidade\" />
   </ItemGroup>
 	<ItemGroup>
