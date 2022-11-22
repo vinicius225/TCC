@@ -1,8 +1,29 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_Login";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <section id="container_login" class="d-flex justify-content-center align-items-center h-100 w-100 pt-4">
+        <form action="" id="login_form">
+            <fieldset>
+                <div class="box-login">
+                    <div class="title text-center">
+                        <h1>Aréa Administrativa</h1>
+                    </div>
+                    <div class="box-inputs">
+                        <div class="mb-3">
+                            <label for="login" class="form-label">Login</label>
+                            <input type="text" class="form-control" id="login" name="login" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passoword" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="passoword" name="password" required>
+                        </div>
+                    </div>
+                    <div class="submit-button">
+                        <button type="submit">Entrar</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </section>
