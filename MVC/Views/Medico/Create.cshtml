@@ -1,5 +1,57 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<section class="crud-atendimento py-5">
+    <div class="container">
+        <div class="container_inputs">
+            <form action="" class="formulario_crud" id="FORMULARIO_CRUD">
+                <h1 class="my-5 text-center">Cadastre ou atualize os dados dos médicos.</h1>
+                <fieldset>
+                    <div class="grid-template">
+                        <div>
+                            <label for="nome" class="form-label">Nome:</label>
+                            <input type="text" class="form-control" id="nome" name="nome">
+                        </div>
+                        <div>
+                            <label for="crm" class="form-label">CRM:</label>
+                            <input type="text" class="form-control" id="crm" name="crm">
+                        </div>
+                        <div>
+                            <label for="estado_crm" class="form-label">Estado CRM:</label>
+                            <select class="form-control" id="estado_crm" name="estado_crm">
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                                <option value="EX">Estrangeiro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="submit-button d-flex justify-content-end align-items-center">
+                        <button type="submit">Salvar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</section>
