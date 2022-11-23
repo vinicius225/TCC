@@ -12,7 +12,9 @@ namespace Data.Entities
         public int id_medico { get; set; }
         public int id_especialidade { get; set; }
 
-        public virtual ICollection<Medico>? Medico { get; set; }
-        public virtual ICollection<Especialidade>? Especialidade { get; set; }
+        [ForeignKey("id_medico")]
+        public virtual ICollection<Medico> Medico { get; set; }
+        [ForeignKey("id_especilalidade")]
+        public virtual ICollection<Especialidade> Especialidade { get; set; }
     }
 }

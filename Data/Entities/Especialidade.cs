@@ -9,6 +9,7 @@ namespace Data.Entities
     {
         public string nome { get; set; }
         public string descricao { get; set; }
+        [ForeignKey("id_medico")]
         public virtual ICollection<Medico> Medico { get; set; }
 
     }
