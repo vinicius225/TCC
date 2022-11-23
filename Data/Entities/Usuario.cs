@@ -17,6 +17,6 @@ namespace Data.Entities
         public int id_perfil { get; set; }
 
         [ForeignKey("id_perfil")]
-        public virtual Perfil? Perfil { get; set; }
+        public virtual Perfil Perfil { get; set; }
     }
 }

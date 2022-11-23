@@ -6,8 +6,10 @@ using Data.Repositories;
 using Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Net.WebSockets;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -79,9 +81,19 @@ namespace API.Controllers
         [HttpPost("/busca-especializada")]
         public ActionResult<MedicoDTO> BuscaEspecializada([FromBody] PesquisaEspecializadaDTO busca)
         {
-            _especialidadeRepository.GetMedicosPorBuscaEspecialidade(busca.busca);
+           var medicos = _especialidadeRepository.GetMedicosPorBuscaEspecialidade(busca.busca);
 
-            return Ok(busca);
+            var medicosDto = new List<MedicoDTO>();
+
+            foreach(var item in medicos)
+            {
+                var temp = new MedicoDTO();
+                temp.Get(item);
+                medicosDto.Add(temp);
+            }
+
+            return Ok(medicosDto);
+
         } 
 
 

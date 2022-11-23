@@ -11,20 +11,20 @@ namespace Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Especialidade_Medico",
+                name: "especialidade",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    id_medico = table.Column<int>(type: "integer", nullable: false),
-                    id_especialidade = table.Column<int>(type: "integer", nullable: false),
+                    nome = table.Column<string>(type: "text", nullable: false),
+                    descricao = table.Column<string>(type: "text", nullable: false),
                     criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Especialidade_Medico", x => x.id);
+                    table.PrimaryKey("PK_especialidade", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,43 +45,46 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UnidadeSaudeMedico",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    id_medidco = table.Column<int>(type: "integer", nullable: false),
-                    id_unidade = table.Column<int>(type: "integer", nullable: false),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    situacao = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UnidadeSaudeMedico", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "especialidade",
+                name: "unidade_saude",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nome = table.Column<string>(type: "text", nullable: false),
-                    descricao = table.Column<string>(type: "text", nullable: false),
-                    id_especialidade = table.Column<int>(type: "integer", nullable: true),
+                    cnpj = table.Column<string>(type: "text", nullable: false),
+                    endereco = table.Column<string>(type: "text", nullable: false),
+                    numero = table.Column<string>(type: "text", nullable: false),
+                    telefone = table.Column<string>(type: "text", nullable: false),
                     criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_especialidade", x => x.id);
+                    table.PrimaryKey("PK_unidade_saude", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "busca_especialidade",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    id_especialidade = table.Column<int>(type: "integer", nullable: false),
+                    descricao = table.Column<string>(type: "text", nullable: false),
+                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    situacao = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_busca_especialidade", x => x.id);
                     table.ForeignKey(
-                        name: "FK_especialidade_Especialidade_Medico_id_especialidade",
+                        name: "FK_busca_especialidade_especialidade_id_especialidade",
                         column: x => x.id_especialidade,
-                        principalTable: "Especialidade_Medico",
-                        principalColumn: "id");
+                        principalTable: "especialidade",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,7 +123,6 @@ namespace Data.Migrations
                     crm = table.Column<string>(type: "text", nullable: false),
                     estado_crm = table.Column<string>(type: "text", nullable: false),
                     id_medico = table.Column<int>(type: "integer", nullable: true),
-                    id_medidco = table.Column<int>(type: "integer", nullable: true),
                     criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
@@ -129,63 +131,32 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_medico", x => x.id);
                     table.ForeignKey(
-                        name: "FK_medico_Especialidade_Medico_id_medico",
+                        name: "FK_medico_unidade_saude_id_medico",
                         column: x => x.id_medico,
-                        principalTable: "Especialidade_Medico",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_medico_UnidadeSaudeMedico_id_medidco",
-                        column: x => x.id_medidco,
-                        principalTable: "UnidadeSaudeMedico",
+                        principalTable: "unidade_saude",
                         principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "unidade_saude",
+                name: "EspecialidadeMedico",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    nome = table.Column<string>(type: "text", nullable: false),
-                    cnpj = table.Column<string>(type: "text", nullable: false),
-                    endereco = table.Column<string>(type: "text", nullable: false),
-                    numero = table.Column<string>(type: "text", nullable: false),
-                    telefone = table.Column<string>(type: "text", nullable: false),
-                    id_unidade = table.Column<int>(type: "integer", nullable: true),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    situacao = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_unidade_saude", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_unidade_saude_UnidadeSaudeMedico_id_unidade",
-                        column: x => x.id_unidade,
-                        principalTable: "UnidadeSaudeMedico",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "busca_especialidade",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     id_especialidade = table.Column<int>(type: "integer", nullable: false),
-                    descricao = table.Column<string>(type: "text", nullable: false),
-                    Especialidadeid = table.Column<int>(type: "integer", nullable: false),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    situacao = table.Column<int>(type: "integer", nullable: false)
+                    id_medico = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_busca_especialidade", x => x.id);
+                    table.PrimaryKey("PK_EspecialidadeMedico", x => new { x.id_especialidade, x.id_medico });
                     table.ForeignKey(
-                        name: "FK_busca_especialidade_especialidade_Especialidadeid",
-                        column: x => x.Especialidadeid,
+                        name: "FK_EspecialidadeMedico_especialidade_id_especialidade",
+                        column: x => x.id_especialidade,
                         principalTable: "especialidade",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EspecialidadeMedico_medico_id_medico",
+                        column: x => x.id_medico,
+                        principalTable: "medico",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -202,9 +173,7 @@ namespace Data.Migrations
                     horarioinicio = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     horariofim = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     dia_semana = table.Column<int>(type: "integer", nullable: false),
-                    UnidadeSaudesid = table.Column<int>(type: "integer", nullable: false),
-                    Medicosid = table.Column<int>(type: "integer", nullable: false),
-                    Especialidadesid = table.Column<int>(type: "integer", nullable: false),
+                    id_plantao = table.Column<int>(type: "integer", nullable: true),
                     criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
@@ -213,34 +182,39 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_plantao", x => x.id);
                     table.ForeignKey(
-                        name: "FK_plantao_especialidade_Especialidadesid",
-                        column: x => x.Especialidadesid,
+                        name: "FK_plantao_especialidade_id_especialidade",
+                        column: x => x.id_especialidade,
                         principalTable: "especialidade",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_plantao_medico_Medicosid",
-                        column: x => x.Medicosid,
+                        name: "FK_plantao_medico_id_medico",
+                        column: x => x.id_medico,
                         principalTable: "medico",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_plantao_unidade_saude_UnidadeSaudesid",
-                        column: x => x.UnidadeSaudesid,
+                        name: "FK_plantao_unidade_saude_id_plantao",
+                        column: x => x.id_plantao,
+                        principalTable: "unidade_saude",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_plantao_unidade_saude_id_unidade",
+                        column: x => x.id_unidade,
                         principalTable: "unidade_saude",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_busca_especialidade_Especialidadeid",
+                name: "IX_busca_especialidade_id_especialidade",
                 table: "busca_especialidade",
-                column: "Especialidadeid");
+                column: "id_especialidade");
 
             migrationBuilder.CreateIndex(
-                name: "IX_especialidade_id_especialidade",
-                table: "especialidade",
-                column: "id_especialidade");
+                name: "IX_EspecialidadeMedico_id_medico",
+                table: "EspecialidadeMedico",
+                column: "id_medico");
 
             migrationBuilder.CreateIndex(
                 name: "IX_medico_id_medico",
@@ -248,28 +222,23 @@ namespace Data.Migrations
                 column: "id_medico");
 
             migrationBuilder.CreateIndex(
-                name: "IX_medico_id_medidco",
-                table: "medico",
-                column: "id_medidco");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_plantao_Especialidadesid",
+                name: "IX_plantao_id_especialidade",
                 table: "plantao",
-                column: "Especialidadesid");
+                column: "id_especialidade");
 
             migrationBuilder.CreateIndex(
-                name: "IX_plantao_Medicosid",
+                name: "IX_plantao_id_medico",
                 table: "plantao",
-                column: "Medicosid");
+                column: "id_medico");
 
             migrationBuilder.CreateIndex(
-                name: "IX_plantao_UnidadeSaudesid",
+                name: "IX_plantao_id_plantao",
                 table: "plantao",
-                column: "UnidadeSaudesid");
+                column: "id_plantao");
 
             migrationBuilder.CreateIndex(
-                name: "IX_unidade_saude_id_unidade",
-                table: "unidade_saude",
+                name: "IX_plantao_id_unidade",
+                table: "plantao",
                 column: "id_unidade");
 
             migrationBuilder.CreateIndex(
@@ -284,6 +253,9 @@ namespace Data.Migrations
                 name: "busca_especialidade");
 
             migrationBuilder.DropTable(
+                name: "EspecialidadeMedico");
+
+            migrationBuilder.DropTable(
                 name: "plantao");
 
             migrationBuilder.DropTable(
@@ -296,16 +268,10 @@ namespace Data.Migrations
                 name: "medico");
 
             migrationBuilder.DropTable(
-                name: "unidade_saude");
-
-            migrationBuilder.DropTable(
                 name: "perfil");
 
             migrationBuilder.DropTable(
-                name: "Especialidade_Medico");
-
-            migrationBuilder.DropTable(
-                name: "UnidadeSaudeMedico");
+                name: "unidade_saude");
         }
     }
 }

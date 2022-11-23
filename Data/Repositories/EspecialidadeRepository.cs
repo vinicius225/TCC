@@ -19,7 +19,17 @@ namespace Data.Repositories
 
         public List<Medico> GetMedicosPorBuscaEspecialidade(string? busca)
         {
-            return _appDbContext.Medico.Where(a => a.nome.Contains(busca)).ToList();
+            var result = _appDbContext.Medico.Where(a => a.nome.ToLower().Contains(busca.ToLower())).ToList();
+            var medido_espec = _appDbContext.Especialidade.Where(b=> b.nome.ToLower().Contains(busca.ToLower())).Select(n=>( n.Medico).ToList());
+
+
+
+            foreach(var medido in medido_espec)
+            {
+                result.AddRange(medido);
+            }
+
+            return result;
         }
     }
 }

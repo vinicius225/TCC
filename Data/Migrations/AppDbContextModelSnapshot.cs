@@ -30,9 +30,6 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<int>("Especialidadeid")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("criado")
                         .HasColumnType("timestamp with time zone");
 
@@ -51,7 +48,7 @@ namespace Data.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Especialidadeid");
+                    b.HasIndex("id_especialidade");
 
                     b.ToTable("busca_especialidade");
                 });
@@ -74,9 +71,6 @@ namespace Data.Migrations
                     b.Property<DateTime>("editado")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("id_especialidade")
-                        .HasColumnType("integer");
-
                     b.Property<string>("nome")
                         .IsRequired()
                         .HasColumnType("text");
@@ -86,37 +80,7 @@ namespace Data.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("id_especialidade");
-
                     b.ToTable("especialidade");
-                });
-
-            modelBuilder.Entity("Data.Entities.Especialidade_Medico", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
-
-                    b.Property<DateTime>("criado")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("editado")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("id_especialidade")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("id_medico")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("situacao")
-                        .HasColumnType("integer");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Especialidade_Medico");
                 });
 
             modelBuilder.Entity("Data.Entities.Medico", b =>
@@ -144,9 +108,6 @@ namespace Data.Migrations
                     b.Property<int?>("id_medico")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("id_medidco")
-                        .HasColumnType("integer");
-
                     b.Property<string>("nome")
                         .IsRequired()
                         .HasColumnType("text");
@@ -157,8 +118,6 @@ namespace Data.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("id_medico");
-
-                    b.HasIndex("id_medidco");
 
                     b.ToTable("medico");
                 });
@@ -201,15 +160,6 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<int>("Especialidadesid")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Medicosid")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UnidadeSaudesid")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("criado")
                         .HasColumnType("timestamp with time zone");
 
@@ -231,6 +181,9 @@ namespace Data.Migrations
                     b.Property<int>("id_medico")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("id_plantao")
+                        .HasColumnType("integer");
+
                     b.Property<int>("id_unidade")
                         .HasColumnType("integer");
 
@@ -239,11 +192,13 @@ namespace Data.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Especialidadesid");
+                    b.HasIndex("id_especialidade");
 
-                    b.HasIndex("Medicosid");
+                    b.HasIndex("id_medico");
 
-                    b.HasIndex("UnidadeSaudesid");
+                    b.HasIndex("id_plantao");
+
+                    b.HasIndex("id_unidade");
 
                     b.ToTable("plantao");
                 });
@@ -270,9 +225,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("id_unidade")
-                        .HasColumnType("integer");
-
                     b.Property<string>("nome")
                         .IsRequired()
                         .HasColumnType("text");
@@ -290,37 +242,7 @@ namespace Data.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("id_unidade");
-
                     b.ToTable("unidade_saude");
-                });
-
-            modelBuilder.Entity("Data.Entities.UnidadeSaudeMedico", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
-
-                    b.Property<DateTime>("criado")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("editado")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("id_medidco")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("id_unidade")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("situacao")
-                        .HasColumnType("integer");
-
-                    b.HasKey("id");
-
-                    b.ToTable("UnidadeSaudeMedico");
                 });
 
             modelBuilder.Entity("Data.Entities.Usuario", b =>
@@ -365,52 +287,60 @@ namespace Data.Migrations
                     b.ToTable("usuario");
                 });
 
+            modelBuilder.Entity("EspecialidadeMedico", b =>
+                {
+                    b.Property<int>("id_especialidade")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("id_medico")
+                        .HasColumnType("integer");
+
+                    b.HasKey("id_especialidade", "id_medico");
+
+                    b.HasIndex("id_medico");
+
+                    b.ToTable("EspecialidadeMedico");
+                });
+
             modelBuilder.Entity("Data.Entities.BuscaEspecialidade", b =>
                 {
                     b.HasOne("Data.Entities.Especialidade", "Especialidade")
-                        .WithMany()
-                        .HasForeignKey("Especialidadeid")
+                        .WithMany("BuscaEspecialidades")
+                        .HasForeignKey("id_especialidade")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Especialidade");
                 });
 
-            modelBuilder.Entity("Data.Entities.Especialidade", b =>
-                {
-                    b.HasOne("Data.Entities.Especialidade_Medico", null)
-                        .WithMany("Especialidade")
-                        .HasForeignKey("id_especialidade");
-                });
-
             modelBuilder.Entity("Data.Entities.Medico", b =>
                 {
-                    b.HasOne("Data.Entities.Especialidade_Medico", null)
-                        .WithMany("Medico")
+                    b.HasOne("Data.Entities.UnidadeSaude", null)
+                        .WithMany("Medicos")
                         .HasForeignKey("id_medico");
-
-                    b.HasOne("Data.Entities.UnidadeSaudeMedico", null)
-                        .WithMany("Medico")
-                        .HasForeignKey("id_medidco");
                 });
 
             modelBuilder.Entity("Data.Entities.Plantao", b =>
                 {
                     b.HasOne("Data.Entities.Especialidade", "Especialidades")
                         .WithMany()
-                        .HasForeignKey("Especialidadesid")
+                        .HasForeignKey("id_especialidade")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Entities.Medico", "Medicos")
                         .WithMany()
-                        .HasForeignKey("Medicosid")
+                        .HasForeignKey("id_medico")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Entities.UnidadeSaude", null)
+                        .WithMany("Plantao")
+                        .HasForeignKey("id_plantao");
+
                     b.HasOne("Data.Entities.UnidadeSaude", "UnidadeSaudes")
                         .WithMany()
-                        .HasForeignKey("UnidadeSaudesid")
+                        .HasForeignKey("id_unidade")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -419,13 +349,6 @@ namespace Data.Migrations
                     b.Navigation("Medicos");
 
                     b.Navigation("UnidadeSaudes");
-                });
-
-            modelBuilder.Entity("Data.Entities.UnidadeSaude", b =>
-                {
-                    b.HasOne("Data.Entities.UnidadeSaudeMedico", null)
-                        .WithMany("UnidadeSaude")
-                        .HasForeignKey("id_unidade");
                 });
 
             modelBuilder.Entity("Data.Entities.Usuario", b =>
@@ -439,18 +362,31 @@ namespace Data.Migrations
                     b.Navigation("Perfil");
                 });
 
-            modelBuilder.Entity("Data.Entities.Especialidade_Medico", b =>
+            modelBuilder.Entity("EspecialidadeMedico", b =>
                 {
-                    b.Navigation("Especialidade");
+                    b.HasOne("Data.Entities.Especialidade", null)
+                        .WithMany()
+                        .HasForeignKey("id_especialidade")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Medico");
+                    b.HasOne("Data.Entities.Medico", null)
+                        .WithMany()
+                        .HasForeignKey("id_medico")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Data.Entities.UnidadeSaudeMedico", b =>
+            modelBuilder.Entity("Data.Entities.Especialidade", b =>
                 {
-                    b.Navigation("Medico");
+                    b.Navigation("BuscaEspecialidades");
+                });
 
-                    b.Navigation("UnidadeSaude");
+            modelBuilder.Entity("Data.Entities.UnidadeSaude", b =>
+                {
+                    b.Navigation("Medicos");
+
+                    b.Navigation("Plantao");
                 });
 #pragma warning restore 612, 618
         }

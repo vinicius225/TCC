@@ -11,6 +11,11 @@ namespace Data.Entities
         public string endereco { get; set; }
         public string numero { get; set; }
         public string telefone { get; set; }
+        [ForeignKey("id_medico")]
+
+        public virtual ICollection<Medico> Medicos { get; set; }
+        [ForeignKey("id_plantao")]
+        public virtual ICollection<Plantao> Plantao { get; set; }
 
 
     }

@@ -24,8 +24,7 @@ namespace Data
         public DbSet<BuscaEspecialidade> BuscaEspecialidade { get; set; }
         public DbSet<Perfil> Perfil { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
-        public DbSet<UnidadeSaudeMedico> UnidadeSaudeMedico { get; set; }
-        public DbSet<Especialidade_Medico> Especialidade_Medico { get; set; }
+
         public DbSet<Plantao> Plantaos { get; set; }
 
 
