@@ -1,10 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Data.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MVC.Controllers
 {
     public class UnidadeController : Controller
     {
+
+        private readonly IMedicoRepository _medicoRepository;
+
+        public UnidadeController(IMedicoRepository medicoRepository)
+        {
+            _medicoRepository = medicoRepository;
+        }
+
         // GET: UnidadesController
         public ActionResult Index()
         {
@@ -36,6 +45,11 @@ namespace MVC.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult PlantaoCreate()
+        {
+            ViewBag.MedicosList = _medicoRepository.GetAll().ToList();
+            return View();
         }
 
         // GET: UnidadesController/Edit/5

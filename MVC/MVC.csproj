@@ -7,18 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Especialidade\**" />
     <Compile Remove="Views\Especilaidade\**" />
-    <Compile Remove="Views\Unidade\**" />
-    <Content Remove="Views\Especialidade\**" />
     <Content Remove="Views\Especilaidade\**" />
-    <Content Remove="Views\Unidade\**" />
-    <EmbeddedResource Remove="Views\Especialidade\**" />
     <EmbeddedResource Remove="Views\Especilaidade\**" />
-    <EmbeddedResource Remove="Views\Unidade\**" />
-    <None Remove="Views\Especialidade\**" />
     <None Remove="Views\Especilaidade\**" />
-    <None Remove="Views\Unidade\**" />
   </ItemGroup>
 
   <ItemGroup>

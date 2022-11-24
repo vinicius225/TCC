@@ -1,0 +1,46 @@
+﻿@using Data.Entities;
+@model Data.DTOs.MedicoDTO
+
+
+<section class="crud-atendimento py-5">
+    <div class="container">
+        <div class="container_inputs">
+            <div class="container">
+                <h1 class="my-5 text-center">Cadastre os dado do médico.</h1>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+
+                            <label for="nome" class="form-label">Nome:</label>
+                            <input required type="text" class="form-control" id="nome" name="nome">
+                        </div>
+                        <div class="col">
+                            <label for="cnpj" class="form-label">CNPJ:</label>
+                            <input required type="text" class="form-control" id="cnpj" name="cnpj">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+
+                            <label for="endereco" class="form-label">Endereço:</label>
+                            <input required type="text" class="form-control" id="endereco" name="endereco">
+                        </div>
+                        <div class="col">
+                            <label for="numero" class="form-label">Numero:</label>
+                            <input required type="text" class="form-control" id="numero" name="numero">
+                        </div>
+                        <div class="col">
+                            <label for="telefone" class="form-label">Telefone:</label>
+                            <input required type="text" class="form-control" id="telefone" name="telefone">
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-button d-flex justify-content-end align-items-center">
+                    <button type="submit">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

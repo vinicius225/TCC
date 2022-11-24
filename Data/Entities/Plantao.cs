@@ -10,8 +10,8 @@ namespace Data.Entities
         public int id_medico { get; set; }
 
         public int id_especialidade { get; set; }
-        public DateTime horarioinicio { get; set; }
-        public DateTime horariofim { get; set; }
+        public string horarioinicio { get; set; }
+        public string horariofim { get; set; }
         public DiasSemana dia_semana { get; set; }
 
         [ForeignKey("id_unidade")]

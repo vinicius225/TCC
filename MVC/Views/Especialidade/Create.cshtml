@@ -1,0 +1,35 @@
+﻿@using Data.Entities;
+@model Data.DTOs.MedicoDTO
+
+
+<section class="crud-atendimento py-5">
+    <div class="container">
+        <div class="container_inputs">
+            <div class="container">
+                <h1 class="my-5 text-center">Cadastre os dados da Especialidade.</h1>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="nome" class="form-label">Nome:</label>
+                            <input required type="text" class="form-control" id="nome" name="nome">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+
+                            <label for="descricao" class="form-label">Descrição:</label>
+                            <textarea required rows="5" class="form-control" id="descricao" name="descricao"></textarea>
+                        </div>
+    
+                    </div>
+                </div>
+
+                <div class="submit-button d-flex justify-content-end align-items-center">
+                    <button type="submit">Salvar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
