@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Especialidade\**" />
+    <Compile Remove="Views\Especilaidade\**" />
+    <Compile Remove="Views\Unidade\**" />
+    <Content Remove="Views\Especialidade\**" />
+    <Content Remove="Views\Especilaidade\**" />
+    <Content Remove="Views\Unidade\**" />
+    <EmbeddedResource Remove="Views\Especialidade\**" />
+    <EmbeddedResource Remove="Views\Especilaidade\**" />
+    <EmbeddedResource Remove="Views\Unidade\**" />
+    <None Remove="Views\Especialidade\**" />
+    <None Remove="Views\Especilaidade\**" />
+    <None Remove="Views\Unidade\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
@@ -20,12 +35,6 @@
     <PackageReference Include="Npgsql" Version="6.0.7" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
     <PackageReference Include="Npgsql.Json.NET" Version="6.0.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Especilaidade\" />
-    <Folder Include="Views\Especialidade\" />
-    <Folder Include="Views\Unidade\" />
   </ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Infra\Infra.csproj" />

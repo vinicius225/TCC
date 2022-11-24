@@ -13,6 +13,9 @@
     margin: 0 auto;
     padding: 0 1rem;
 }
+label {
+    color: #34d1a2;
+}
 
 .formulario_crud label {
     padding-left: 0.5rem;

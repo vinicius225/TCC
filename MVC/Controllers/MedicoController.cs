@@ -1,10 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Data.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MVC.Controllers
 {
     public class MedicoController : Controller
     {
+        private readonly IMedicoRepository _medicoRepository;
+        private readonly IEspecialidadeRepository _especialidadeRepository;
+
+        public MedicoController(IMedicoRepository medicoRepository, IEspecialidadeRepository especialidadeRepository)
+        {
+            _medicoRepository = medicoRepository;
+            _especialidadeRepository = especialidadeRepository;
+        }
+
         // GET: MedicosController
         public ActionResult Index()
         {
@@ -20,6 +30,7 @@ namespace MVC.Controllers
         // GET: MedicosController/Create
         public ActionResult Create()
         {
+            ViewBag.Especialidades = _especialidadeRepository.GetAll().ToList();
             return View();
         }
 
