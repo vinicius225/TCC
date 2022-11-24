@@ -3,6 +3,10 @@ using Data.Entities;
 using Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.WebSockets;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Unicode;
+using static System.Text.Encoding;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,51 +24,71 @@ namespace API.Controllers
             _usuarioRepository = usuarioRepository;
         }
 
-        // GET: api/<UsuarioController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<UsuarioController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<UsuarioController>
         [HttpPost("cadastrar")]
         public ActionResult<UsuarioDTO> Cadastrar([FromBody] UsuarioDTO usuario)
         {
+
+             usuario.senha = GerarHash(usuario.senha);
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
+
+                    var usuarioExiste = _usuarioRepository.GetAll().Where(a => a.email == usuario.email).ToList();
+                    if (usuarioExiste.Count() > 0)
+                    {
+                        return BadRequest("E-mail já cadastrado");
+                    }
                     var usuarioBD = new Usuario();
                     usuario.Set(usuarioBD);
                     usuarioBD.id_perfil = 2;
                     _usuarioRepository.Add(usuarioBD);
                 }
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
-            return usuario;
+            return Ok(usuario);
         }
 
         // PUT api/<UsuarioController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("Login")]
+        public ActionResult Login([FromBody] UsuarioDTO usuarioDTO)
         {
+            usuarioDTO.senha = GerarHash(usuarioDTO.senha);
+            var usuario = _usuarioRepository.GetAll().Where(b => b.email == usuarioDTO.email || b.senha == usuarioDTO.senha).FirstOrDefault();
+            if (usuario == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
         }
 
-        // DELETE api/<UsuarioController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+
+
+        private string GerarHash(string senha)
         {
+
+            MD5 md5Hash = MD5.Create();
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(senha));
+
+            StringBuilder sBuilder = new StringBuilder();
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            return sBuilder.ToString();
         }
     }
+
 }
