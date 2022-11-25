@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page"; ;
+}
+@model List<Data.Entities.Especialidade>;
+<a type="button" class="btn btn-primary mb-4 float-end" href="/especialidade/create">Adicionar</a>
+<table id="example" class="table" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nome</th>
+            <th align="center" >Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+            <tr>
+                <td>@item.nome</td>
+                <td align="center" class=""><a href="/especialidade/edit/@(item.id)">Editar</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+

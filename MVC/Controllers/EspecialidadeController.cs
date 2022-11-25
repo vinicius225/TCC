@@ -1,14 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Data.DTOs;
+using Data.Entities;
+using Data.Repositories.Interfaces;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MVC.Controllers
 {
     public class EspecialidadeController : Controller
     {
+        private readonly IEspecialidadeRepository _especialidadeRepository;
+
+        public EspecialidadeController(IEspecialidadeRepository especialidadeRepository)
+        {
+            _especialidadeRepository = especialidadeRepository;
+        }
+
+
         // GET: EspecialidadeController
         public ActionResult Index()
         {
-            return View();
+            return View( _especialidadeRepository.GetAll().ToList());
         }
 
         // GET: EspecialidadeController/Details/5
@@ -25,11 +37,17 @@ namespace MVC.Controllers
 
         // POST: EspecialidadeController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(EspecialidadeDTO especialidade)
         {
             try
             {
+
+                    if (ModelState.IsValid)
+                    {
+                        var especialidadeBD = new Especialidade();
+                        especialidade.Set(especialidadeBD);
+                        _especialidadeRepository.Add(especialidadeBD);
+                    }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -41,16 +59,31 @@ namespace MVC.Controllers
         // GET: EspecialidadeController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+
+            var especialidadeBD = _especialidadeRepository.Get(id);
+            if (especialidadeBD == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            var especialidade = new EspecialidadeDTO();
+            especialidade.Get(especialidadeBD);
+            return View(especialidade);
         }
 
         // POST: EspecialidadeController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit( int id,EspecialidadeDTO especialidade)
         {
             try
             {
+
+                var especialidadeBD = _especialidadeRepository.Get(especialidade.id);
+
+                if (ModelState.IsValid)
+                {
+                    especialidade.Set(especialidadeBD);
+                    _especialidadeRepository.Update(especialidadeBD);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch

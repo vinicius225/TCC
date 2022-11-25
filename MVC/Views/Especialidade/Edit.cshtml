@@ -1,17 +1,19 @@
 ﻿@using Data.Entities;
 @model Data.DTOs.EspecialidadeDTO;
 
-<form action="/Especialidade/Create" method="post">
+<form action="/Especialidade/Edit" method="post">
+
+
     <section class="crud-atendimento py-5">
         <div class="container">
             <div class="container_inputs">
                 <div class="container">
-                    <h1 class="my-5 text-center">Cadastre os dados da Especialidade.</h1>
+                    <h1 class="my-5 text-center">Altere os dados da Especialidade.</h1>
                     <div class="form-group">
                         <div class="row">
                             <div class="col">
                                 <label for="nome" class="form-label">Nome:</label>
-                                <input required type="text" class="form-control" id="nome" name="nome">
+                                <input required type="text" class="form-control"  value="@Model.nome" id="nome" name="nome">
                             </div>
                         </div>
                     </div>
@@ -20,7 +22,7 @@
                             <div class="col">
 
                                 <label for="descricao" class="form-label">Descrição:</label>
-                                <textarea required rows="5" class="form-control" id="descricao" name="descricao"></textarea>
+                                <textarea required rows="5" class="form-control" id="descricao"  name="descricao">@Model.descricao</textarea>
                             </div>
 
                         </div>
@@ -32,5 +34,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="id" name="id" value="@Model.id" />
+
     </section>
 </form>
