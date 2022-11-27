@@ -13,6 +13,15 @@ namespace Data.Repositories
             _appDbContext = appDbContext;
         }
 
+        public List<Medico> GetAllMedicoEspecialidade()
+        {
+            return _appDbContext.Medico.Include(a => a.Especialidade).ToList();
+        }
 
+        public Medico GetMedicoEspecialidade(int id)
+        {
+            return _appDbContext.Medico.Include(a => a.Especialidade).Where(b=> b.id == id).FirstOrDefault();
+
+        }
     }
 }

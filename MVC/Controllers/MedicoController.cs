@@ -4,6 +4,7 @@ using Data.Entities;
 using Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Net.WebSockets;
 
@@ -13,12 +14,10 @@ namespace MVC.Controllers
     {
         private readonly IMedicoRepository _medicoRepository;
         private readonly IEspecialidadeRepository _especialidadeRepository;
-        private readonly AppDbContext _appDbContext;
-        public MedicoController(IMedicoRepository medicoRepository, IEspecialidadeRepository especialidadeRepository, AppDbContext appDbContext)
+        public MedicoController(IMedicoRepository medicoRepository, IEspecialidadeRepository especialidadeRepository)
         {
             _medicoRepository = medicoRepository;
             _especialidadeRepository = especialidadeRepository;
-            _appDbContext = appDbContext;
         }
 
 
@@ -26,7 +25,7 @@ namespace MVC.Controllers
         // GET: MedicosController
         public ActionResult Index()
         {
-            return View(_appDbContext.Medico.Include(a => a.Especialidade).ToList());
+            return View(_medicoRepository.GetAllMedicoEspecialidade());
         }
 
         // GET: MedicosController/Details/5
@@ -58,7 +57,7 @@ namespace MVC.Controllers
 
                         medicoDTO.Set(medicoBD);
                         var listEspecialidade = new List<Especialidade>();
-                        foreach( int item in medicoDTO.ids_Especialidades)
+                        foreach (int item in medicoDTO.ids_Especialidades)
                         {
                             var temp = _especialidadeRepository.Get(item);
                             listEspecialidade.Add(temp);
@@ -84,16 +83,34 @@ namespace MVC.Controllers
         // GET: MedicosController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var medico = _medicoRepository.GetMedicoEspecialidade(id);
+            var medicoDTO = new MedicoDTO();
+            medicoDTO.Get(medico);
+            ViewBag.Especialidades = _especialidadeRepository.GetAll().ToList();
+            return View(medicoDTO);
+
         }
 
         // POST: MedicosController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(MedicoDTO medicoDTO)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    var medidoBD = _medicoRepository.GetMedicoEspecialidade(medicoDTO.id);
+                    var listEspecialidade = new List<Especialidade>();
+                    foreach (int item in medicoDTO.ids_Especialidades)
+                    {
+                        var temp = _especialidadeRepository.Get(item);
+                        listEspecialidade.Add(temp);
+                    }
+                    medidoBD.Especialidade = listEspecialidade;
+                    _medicoRepository.Update(medidoBD);
+
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -122,5 +139,6 @@ namespace MVC.Controllers
                 return View();
             }
         }
+
     }
 }

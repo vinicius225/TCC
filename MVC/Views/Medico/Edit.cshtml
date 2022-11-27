@@ -1,0 +1,79 @@
+﻿@using Data.Entities;
+@model Data.DTOs.MedicoDTO
+
+<form action="/Medico/Create" method="post">
+<section class="crud-atendimento py-5">
+    <div class="container">
+        <div class="container_inputs">
+            <div class="container">
+                <h1 class="my-5 text-center">Edite os dado do médico.</h1>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+
+                            <label for="nome" class="form-label">Nome:</label>
+                            <input required type="text" class="form-control" id="nome" value="@Model.nome" name="nome">
+                        </div>
+                        <div class="col">
+                            <label for="crm" class="form-label">CRM:</label>
+                            <input required type="text" class="form-control" id="crm" value="@Model.crm" name="crm">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="estado_crm" class="form-label">Estado CRM:</label>
+                                <select required class="form-select" asp-for=estado_crm id="estado_crm" name="estado_crm" aria-label="Selecione uma opção">
+                            <option  value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                            <option value="EX">Estrangeiro</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="ids_Especialidades" class="form-label">Especialidade:</label>
+                                <select required asp-for=ids_Especialidades class="js-example-basic-single form-select" id="ids_Especialidades" name="ids_Especialidades" style="width:100%" multiple aria-label="Selecione uma opção">
+                                @foreach (Especialidade especialidade in ViewBag.Especialidades)
+                                {
+                                    <option value="@especialidade.id">@especialidade.nome</option>
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-button d-flex justify-content-end align-items-center">
+                    <button type="submit">Salvar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+        <input type="hidden" id="id" name="id" value="@Model.id" />
+
+</section>
+</form>

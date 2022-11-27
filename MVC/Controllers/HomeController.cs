@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data.DTOs;
+using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using System.Diagnostics;
 
@@ -17,6 +18,12 @@ namespace MVC.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Index(UsuarioDTO usuarioDTO)
+        {
+            return Redirect("/Medico");
+        }
+
 
         public IActionResult Privacy()
         {

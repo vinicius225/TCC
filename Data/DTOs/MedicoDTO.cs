@@ -9,7 +9,7 @@ namespace Data.DTOs
 {
     public class MedicoDTO : IDTO<Medico>
     {
-
+        public int id { get; set; }
         public string nome { get; set; }
         public string crm { get; set; }
         public string estado_crm { get; set; }
@@ -17,6 +17,7 @@ namespace Data.DTOs
 
         public void Get(Medico obj)
         {
+            this.id = obj.id;
             this.nome = obj.nome;
             this.crm = obj.crm;
             this.estado_crm = obj.estado_crm;
@@ -25,6 +26,7 @@ namespace Data.DTOs
 
         public void Set(Medico obj)
         {
+            obj.id = this.id;
             obj.nome = this.nome;
             obj.crm = this.crm;
             obj.estado_crm = this.estado_crm;
