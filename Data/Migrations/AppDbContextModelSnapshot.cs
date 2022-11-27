@@ -31,16 +31,19 @@ namespace Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
                     b.Property<DateTime>("criado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("descricao")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("editado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("id_especialidade")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("id_especialidade_be")
                         .HasColumnType("integer");
 
                     b.Property<int>("situacao")
@@ -49,6 +52,8 @@ namespace Data.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("id_especialidade");
+
+                    b.HasIndex("id_especialidade_be");
 
                     b.ToTable("busca_especialidade");
                 });
@@ -62,14 +67,14 @@ namespace Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
                     b.Property<DateTime>("criado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("descricao")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("editado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("nome")
                         .IsRequired()
@@ -92,14 +97,14 @@ namespace Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
                     b.Property<DateTime>("criado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("crm")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("editado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("estado_crm")
                         .IsRequired()
@@ -131,14 +136,14 @@ namespace Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
                     b.Property<DateTime>("criado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("descricao")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("editado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("nome")
                         .IsRequired()
@@ -161,19 +166,21 @@ namespace Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
                     b.Property<DateTime>("criado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("dia_semana")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("editado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime>("horariofim")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("horariofim")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("horarioinicio")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("horarioinicio")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("id_especialidade")
                         .HasColumnType("integer");
@@ -216,10 +223,10 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("criado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("editado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("endereco")
                         .IsRequired()
@@ -254,10 +261,10 @@ namespace Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
                     b.Property<DateTime>("criado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("editado")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -305,10 +312,14 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.BuscaEspecialidade", b =>
                 {
                     b.HasOne("Data.Entities.Especialidade", "Especialidade")
-                        .WithMany("BuscaEspecialidades")
+                        .WithMany()
                         .HasForeignKey("id_especialidade")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Data.Entities.Especialidade", null)
+                        .WithMany("BuscaEspecialidades")
+                        .HasForeignKey("id_especialidade_be");
 
                     b.Navigation("Especialidade");
                 });

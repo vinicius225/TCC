@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,8 +18,8 @@ namespace Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nome = table.Column<string>(type: "text", nullable: false),
                     descricao = table.Column<string>(type: "text", nullable: false),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    criado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    editado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -35,8 +35,8 @@ namespace Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nome = table.Column<string>(type: "text", nullable: false),
                     descricao = table.Column<string>(type: "text", nullable: false),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    criado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    editado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -55,8 +55,8 @@ namespace Data.Migrations
                     endereco = table.Column<string>(type: "text", nullable: false),
                     numero = table.Column<string>(type: "text", nullable: false),
                     telefone = table.Column<string>(type: "text", nullable: false),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    criado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    editado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -72,8 +72,9 @@ namespace Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     id_especialidade = table.Column<int>(type: "integer", nullable: false),
                     descricao = table.Column<string>(type: "text", nullable: false),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    id_especialidade_be = table.Column<int>(type: "integer", nullable: true),
+                    criado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    editado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -85,6 +86,11 @@ namespace Data.Migrations
                         principalTable: "especialidade",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_busca_especialidade_especialidade_id_especialidade_be",
+                        column: x => x.id_especialidade_be,
+                        principalTable: "especialidade",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -98,8 +104,8 @@ namespace Data.Migrations
                     sexo = table.Column<char>(type: "character(1)", nullable: false),
                     senha = table.Column<string>(type: "text", nullable: false),
                     id_perfil = table.Column<int>(type: "integer", nullable: false),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    criado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    editado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -123,8 +129,8 @@ namespace Data.Migrations
                     crm = table.Column<string>(type: "text", nullable: false),
                     estado_crm = table.Column<string>(type: "text", nullable: false),
                     id_medico = table.Column<int>(type: "integer", nullable: true),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    criado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    editado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -170,12 +176,12 @@ namespace Data.Migrations
                     id_unidade = table.Column<int>(type: "integer", nullable: false),
                     id_medico = table.Column<int>(type: "integer", nullable: false),
                     id_especialidade = table.Column<int>(type: "integer", nullable: false),
-                    horarioinicio = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    horariofim = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    horarioinicio = table.Column<string>(type: "text", nullable: false),
+                    horariofim = table.Column<string>(type: "text", nullable: false),
                     dia_semana = table.Column<int>(type: "integer", nullable: false),
                     id_plantao = table.Column<int>(type: "integer", nullable: true),
-                    criado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    editado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    criado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    editado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     situacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -210,6 +216,11 @@ namespace Data.Migrations
                 name: "IX_busca_especialidade_id_especialidade",
                 table: "busca_especialidade",
                 column: "id_especialidade");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_busca_especialidade_id_especialidade_be",
+                table: "busca_especialidade",
+                column: "id_especialidade_be");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EspecialidadeMedico_id_medico",

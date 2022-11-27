@@ -4,5 +4,6 @@ namespace Data.Repositories.Interfaces
 {
     public interface IMedicoRepository : IRepositoryBase<Medico>
     {
+
     }
 }

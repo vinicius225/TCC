@@ -1,7 +1,7 @@
 ﻿@using Data.Entities;
 @model Data.DTOs.MedicoDTO
 
-
+<form action="/Medico/Create" method="post">
 <section class="crud-atendimento py-5">
     <div class="container">
         <div class="container_inputs">
@@ -24,8 +24,7 @@
                     <div class="row">
                         <div class="col">
                             <label for="estado_crm" class="form-label">Estado CRM:</label>
-                            <select required class="form-select" aria-label="Selecione uma opção">
-                            <option selected>Selecione uma opção</option>
+                                <select required class="form-select" id="estado_crm" name="estado_crm" aria-label="Selecione uma opção">
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>
@@ -58,7 +57,7 @@
                         </div>
                         <div class="col">
                             <label for="ids_Especialidades" class="form-label">Especialidade:</label>
-                            <select required class="js-example-basic-single form-select" style="width:100%" multiple aria-label="Selecione uma opção">
+                                <select required class="js-example-basic-single form-select" id="ids_Especialidades" name="ids_Especialidades" style="width:100%" multiple aria-label="Selecione uma opção">
                                 @foreach (Especialidade especialidade in ViewBag.Especialidades)
                                 {
                                     <option value="@especialidade.id">@especialidade.nome</option>
@@ -75,3 +74,4 @@
         </div>
     </div>
 </section>
+</form>
