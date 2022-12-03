@@ -44,6 +44,8 @@ namespace MVC.Controllers
             usuarioDTO.Set(usuarioBD);
             usuarioBD.Perfil = perfil;
             _usuarioRepository.Add(usuarioBD);
+            TempData["mensagem"] = Helper.HelperHtml.MessageAlert("Adicionado com sucesso", Helper.Enum.ErrosEnum.Sucesso);
+
             return RedirectToAction(nameof(Index));
         }
     }
