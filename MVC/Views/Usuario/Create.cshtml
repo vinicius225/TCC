@@ -1,0 +1,65 @@
+﻿@using Data.Entities;
+@model Data.DTOs.UsuariositeDTO;
+
+
+@Html.Raw(TempData["mensagem"])
+
+<form action="/usuario/Create" method="post">
+    <section class="crud-atendimento py-5">
+        <div class="container">
+            <div class="container_inputs">
+                <div class="container">
+                    <h1 class="my-5 text-center">Cadastre os dado do médico.</h1>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+
+                                <label for="nome" class="form-label">Nome:</label>
+                                <input required type="text" class="form-control" asp-for="nome">
+                            </div>
+                            <div class="col">
+                                <label for="crm" class="form-label">E-mail:</label>
+                                <input required type="email" class="form-control" asp-for="email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="ids_Especialidades" class="form-label">Sexo:</label>
+                                <select required class=" form-select" id="sexo" name="sexo" style="width:100%" aria-label="Selecione uma opção">
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Feminino</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="id_perfil" class="form-label">Perfil:</label>
+                                <select required class=" form-select" asp-for="id_perfil" style="width:100%" aria-label="Selecione uma opção">
+                                    <option value="1">Administrador</option>
+                                    <option value="2">Paciente</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+
+                                <label for="senha" class="form-label">Senha:</label>
+                                <input required type="password" class="form-control" id="senha" name="senha">
+                            </div>
+                            <div class="col">
+                                <label for="confima_senha" class="form-label">Confirmar senha:</label>
+                                <input required type="password" class="form-control" asp-for="confima_senha">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-button d-flex justify-content-between align-items-center">
+                        <button class="btn  btn-danger btn-voltar" type="button" onclick="window.history.back()">Voltar</button>
+                        <button type="submit">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>

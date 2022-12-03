@@ -1,6 +1,7 @@
 ﻿@using Data.Entities;
 @model Data.DTOs.EspecialidadeDTO;
 
+@Html.Raw(TempData["mensagem"])
 <form action="/Especialidade/Create" method="post">
     <section class="crud-atendimento py-5">
         <div class="container">

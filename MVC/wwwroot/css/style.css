@@ -144,6 +144,10 @@ h1 {
     font-family: "Poppins", sans-serif;
     transition: all ease-in-out .2s;
 }
+    .submit-button .btn-voltar {
+
+        background-color: red;
+    }
 
 .submit-button button:hover {
     transform: translateY(-5px) scale(1.02);

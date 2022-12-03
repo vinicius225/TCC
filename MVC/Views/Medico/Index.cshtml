@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Lista de Medicos"; ;
 }
+
 @model List<Data.Entities.Medico>;
+
+@Html.Raw(TempData["mensagem"])
 <h3 class="mb-4 float-start">Medicos</h3>
 <a type="button" class="btn btn-primary mb-4 float-end" href="/medico/create">Adicionar</a>
 <table id="example" class="table" style="width:100%">
