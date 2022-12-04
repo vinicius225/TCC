@@ -1,8 +1,11 @@
 ﻿@using Data.Entities;
 @model Data.DTOs.UnidadeDTO
-@{ViewData["Title"] = "Criar Unidade";}
+@{
+    ViewData["Title"] = "Editar Unidade";
+}
+
 @Html.Raw(TempData["mensagem"])
-<form action="/Unidade/Create" method="POST">
+<form action="Unidade/Edit" method="POST">
     <input type="hidden" asp-for="id" />
     <section class="crud-atendimento py-5">
         <div class="container">
@@ -47,6 +50,11 @@
         </div>
     </section>
     <script>
-
+        $("#cnpj").on("keyup", function (e) {
+            $(this).val(
+                $(this).val()
+                    .replace(/\D/g, '')
+                    .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, "$1 $2 $3/$4-$5"));
+        });
     </script>
 </form>

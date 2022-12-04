@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Lista de Unidades"; ;
+}
+
+@model List<Data.Entities.UnidadeSaude>;
+
+@Html.Raw(TempData["mensagem"])
+<h3 class="mb-4 float-start">Unidades</h3>
+<a type="button" class="btn btn-primary mb-4 float-end" href="/unidade/create">Adicionar</a>
+<table id="example" class="table" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nome</th>
+            <th align="center">CNPJ</th>
+            <th align="center">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+            <tr>
+                <td>@item.nome</td>
+                <td>@item.cnpj</td>
+                <td align="center" class=""><a href="/unidade/edit/@(item.id)">Editar</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+

@@ -1,4 +1,6 @@
-﻿using Data.Repositories.Interfaces;
+﻿using Data.DTOs;
+using Data.Entities;
+using Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,17 +9,20 @@ namespace MVC.Controllers
     public class UnidadeController : Controller
     {
 
+        private readonly IUnidadeSaudeRepository _unidadeSaudeRepository;
         private readonly IMedicoRepository _medicoRepository;
 
-        public UnidadeController(IMedicoRepository medicoRepository)
+        public UnidadeController(IUnidadeSaudeRepository unidadeSaudeRepository, IMedicoRepository medicoRepository)
         {
+            _unidadeSaudeRepository = unidadeSaudeRepository;
             _medicoRepository = medicoRepository;
         }
+
 
         // GET: UnidadesController
         public ActionResult Index()
         {
-            return View();
+            return View(_unidadeSaudeRepository.GetAll().ToList());
         }
 
         // GET: UnidadesController/Details/5
@@ -34,12 +39,41 @@ namespace MVC.Controllers
 
         // POST: UnidadesController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(UnidadeDTO unidadeDTO)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var unidade = new UnidadeSaude();
+                unidadeDTO.Set(unidade);
+                _unidadeSaudeRepository.Add(unidade);
+                TempData["mensagem"] = Helper.HelperHtml.MessageAlert("Adicionado com sucesso", Helper.Enum.ErrosEnum.Sucesso);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public ActionResult Edit(int id)
+        {
+            var unidade = _unidadeSaudeRepository.Get(id);
+            var unidadeDTO = new UnidadeDTO();
+            unidadeDTO.Get(unidade);
+            return View(unidadeDTO);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(UnidadeDTO unidadeDTO)
+        {
+            var unidade = _unidadeSaudeRepository.Get(unidadeDTO.id);
+            try
+            {
+
+                unidadeDTO.Set(unidade);
+                _unidadeSaudeRepository.Update(unidade);
+                TempData["mensagem"] = Helper.HelperHtml.MessageAlert("Atualizado com sucesso", Helper.Enum.ErrosEnum.Sucesso);
+                return RedirectToAction("Index");
+
             }
             catch
             {
@@ -52,11 +86,7 @@ namespace MVC.Controllers
             return View();
         }
 
-        // GET: UnidadesController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+
 
         // POST: UnidadesController/Edit/5
         [HttpPost]
