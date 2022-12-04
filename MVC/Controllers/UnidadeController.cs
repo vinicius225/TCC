@@ -11,18 +11,26 @@ namespace MVC.Controllers
 
         private readonly IUnidadeSaudeRepository _unidadeSaudeRepository;
         private readonly IMedicoRepository _medicoRepository;
+        private readonly IPlantaoRepository _plantaoRepository;
 
-        public UnidadeController(IUnidadeSaudeRepository unidadeSaudeRepository, IMedicoRepository medicoRepository)
+        public UnidadeController(IUnidadeSaudeRepository unidadeSaudeRepository, IMedicoRepository medicoRepository, IPlantaoRepository plantaoRepository)
         {
             _unidadeSaudeRepository = unidadeSaudeRepository;
             _medicoRepository = medicoRepository;
+            _plantaoRepository = plantaoRepository;
         }
+
 
 
         // GET: UnidadesController
         public ActionResult Index()
         {
             return View(_unidadeSaudeRepository.GetAll().ToList());
+        }
+        public IActionResult PlantaoListar(int id)
+        {
+            var plantao = _plantaoRepository.GetAll().Where(a=> a.id == id).ToList(); 
+            return View(plantao);   
         }
 
         // GET: UnidadesController/Details/5

@@ -1,8 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Lista de Unidades"; ;
+    ViewData["Title"] = "Lista de Plantão"; ;
 }
 
-@model List<Data.Entities.UnidadeSaude>;
+@model List<Data.Entities.Plantao>;
 
 @Html.Raw(TempData["mensagem"])
 <h3 class="mb-4 float-start">Unidades</h3>
@@ -10,8 +10,9 @@
 <table id="example" class="table" style="width:100%">
         <thead>
             <tr>
-                <th>Nome</th>
-            <th align="center">CNPJ</th>
+                <th>Medico</th>
+            <th align="center">Horario Inicio</th>
+            <th align="center">Horario Fim</th>
             <th align="center">Ações</th>
             </tr>
         </thead>
@@ -19,12 +20,10 @@
             @foreach(var item in Model)
             {
             <tr>
-                <td>@item.nome</td>
-                <td>@item.cnpj</td>
-                <td align="center" class="">
-                    <a href="/unidade/edit/@(item.id)">Editar</a>/|
-                    <a href="/unidade/plantaolistar/@(item.id)">Plantões</a>
-                </td>
+                <td>@item.Medicos.nome</td>
+                <td>@item.horarioinicio</td>
+                <td>@item.horariofim</td>
+                <td align="center" class=""><a href="/unidade/edit/@(item.id)">Editar</a></td>
             </tr>
             }
         </tbody>
