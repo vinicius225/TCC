@@ -12,5 +12,7 @@ namespace Data.Entities
     {
         public string nome { get; set; }
         public string descricao { get; set; }
+
+        public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

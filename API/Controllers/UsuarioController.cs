@@ -57,18 +57,24 @@ namespace API.Controllers
 
         // PUT api/<UsuarioController>/5
         [HttpPost("Login")]
-        public ActionResult Login([FromBody] UsuarioDTO usuarioDTO)
+        public ActionResult Login([FromBody] UsuariosLoginDTO usuarioDTO)
         {
             usuarioDTO.senha = GerarHash(usuarioDTO.senha);
-            var usuario = _usuarioRepository.GetAll().Where(b => b.email == usuarioDTO.email || b.senha == usuarioDTO.senha).FirstOrDefault();
+            var usuario = _usuarioRepository.GetAll().Where(b => b.email == usuarioDTO.email && b.senha == usuarioDTO.senha).FirstOrDefault();
             if (usuario == null)
             {
-                return BadRequest();
+                return NotFound();
             }
             else
             {
                 return Ok();
             }
+        }
+
+        [HttpGet("listar")]
+        public ActionResult ListarUsuarios()
+        {
+            return Ok(_usuarioRepository.GetAll());
         }
 
 

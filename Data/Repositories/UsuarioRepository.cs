@@ -16,13 +16,19 @@ namespace Data.Repositories
 
         public List<Usuario> GetAllUsuarioPerfil()
         {
-            return _appDbContext.Usuario.Include(a => a.Perfil).ToList();
+            var usuarios = _appDbContext.Usuario.ToList();
+            foreach (var item in usuarios)
+            {
+                item.Perfil = _appDbContext.Perfil.Where(a => a.id == item.id_perfil).FirstOrDefault();
+            }
+            return usuarios;
         }
 
         public Usuario GetUsuarioPerfil(int id)
         {
-            return _appDbContext.Usuario.Include(a => a.Perfil).Where(b=> b.id == id).FirstOrDefault();
-
+            var usuario = _appDbContext.Usuario.Include(a => a.Perfil).Where(b => b.id == id).FirstOrDefault();
+            usuario.Perfil = _appDbContext.Perfil.Where(a => a.id == usuario.id_perfil).FirstOrDefault();
+            return usuario;
         }
     }
 }

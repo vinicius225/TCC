@@ -67,5 +67,25 @@ namespace Data.DTOs
             obj.email = this.email;
         }
     }
+    public class UsuariosLoginDTO : IDTO<Usuario>
+    {
+
+        public string email { get; set; }
+        public string senha { get; set; }
+
+
+        public void Get(Usuario obj)
+        {
+
+            this.email = obj.email;
+            this.senha = obj.senha;
+        }
+
+        public void Set(Usuario obj)
+        {
+            obj.email = this.email;
+            obj.senha = this.senha;
+        }
+    }
 
 }

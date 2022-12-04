@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221127012447_initial")]
-    partial class initial
+    [Migration("20221203194111_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -367,7 +367,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Usuario", b =>
                 {
                     b.HasOne("Data.Entities.Perfil", "Perfil")
-                        .WithMany()
+                        .WithMany("Usuarios")
                         .HasForeignKey("id_perfil")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -393,6 +393,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Especialidade", b =>
                 {
                     b.Navigation("BuscaEspecialidades");
+                });
+
+            modelBuilder.Entity("Data.Entities.Perfil", b =>
+                {
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("Data.Entities.UnidadeSaude", b =>

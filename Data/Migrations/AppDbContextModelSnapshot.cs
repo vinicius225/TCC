@@ -365,7 +365,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Usuario", b =>
                 {
                     b.HasOne("Data.Entities.Perfil", "Perfil")
-                        .WithMany()
+                        .WithMany("Usuarios")
                         .HasForeignKey("id_perfil")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -391,6 +391,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Especialidade", b =>
                 {
                     b.Navigation("BuscaEspecialidades");
+                });
+
+            modelBuilder.Entity("Data.Entities.Perfil", b =>
+                {
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("Data.Entities.UnidadeSaude", b =>
