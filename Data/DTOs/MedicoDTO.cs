@@ -14,6 +14,7 @@ namespace Data.DTOs
         public string crm { get; set; }
         public string estado_crm { get; set; }
         public List<int> ids_Especialidades { get; set; }
+        public List<string> especialidadesNome { get; set; } = new List<string>();
 
         public void Get(Medico obj)
         {
@@ -21,7 +22,11 @@ namespace Data.DTOs
             this.nome = obj.nome;
             this.crm = obj.crm;
             this.estado_crm = obj.estado_crm;
-            this.ids_Especialidades = obj.Especialidade.Select(n=> n.id).ToList();
+            if (obj.Especialidade != null)
+            {
+                this.ids_Especialidades = obj.Especialidade.Select(n => n.id).ToList();
+                this.especialidadesNome = obj.Especialidade.Select(a => a.nome).ToList();
+            }
         }
 
         public void Set(Medico obj)

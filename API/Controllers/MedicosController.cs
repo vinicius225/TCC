@@ -27,7 +27,7 @@ namespace API.Controllers
         public async Task<ActionResult<List<MedicoDTO>>> Get()
         {
 
-            var medicosBD =  _medicoRepository.GetAll();
+            var medicosBD =  _medicoRepository.GetAllMedicoEspecialidade();
 
             List<MedicoDTO> result = new List<MedicoDTO>();
 

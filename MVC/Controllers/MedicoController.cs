@@ -93,7 +93,6 @@ namespace MVC.Controllers
 
         // POST: MedicosController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(MedicoDTO medicoDTO)
         {
             try

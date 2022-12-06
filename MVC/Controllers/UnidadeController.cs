@@ -88,7 +88,7 @@ namespace MVC.Controllers
                 return View();
             }
         }
-        public ActionResult PlantaoCreate()
+        public ActionResult PlantaoCreate(int id)
         {
             ViewBag.MedicosList = _medicoRepository.GetAll().ToList();
             return View();

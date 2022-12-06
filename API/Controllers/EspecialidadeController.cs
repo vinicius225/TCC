@@ -78,7 +78,7 @@ namespace API.Controllers
             return Ok(especialidadeDTO);
         }
 
-        [HttpPost("/busca-especializada")]
+        [HttpPost("busca-especializada")]
         public ActionResult<MedicoDTO> BuscaEspecializada([FromBody] PesquisaEspecializadaDTO busca)
         {
            var medicos = _especialidadeRepository.GetMedicosPorBuscaEspecialidade(busca.busca);
